@@ -1,5 +1,4 @@
 const { User } = require("../models/user");
-const { ObjectID } = require("mongodb");
 
 module.exports = {
   index(request, response, next){
