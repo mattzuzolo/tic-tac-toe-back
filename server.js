@@ -6,14 +6,14 @@ const app = express();
 
 //local files
 const { mongoose } = require("./db/mongoose");
-// const routes = require("./routes/routes");
+const routes = require("./routes/routes");
 
 const PORT = process.env.PORT || 4000;
 
 //configure middleware
 app.use(cors());
 app.use(bodyParser.json());
-// routes(app);
+routes(app);
 
 app.listen(PORT, () => {
   console.log(`Started on port ${PORT}`);
