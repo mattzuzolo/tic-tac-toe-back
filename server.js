@@ -5,7 +5,7 @@ const cors = require("cors");
 const app = express();
 
 //local files
-// const { mongoose } = require("./db/mongoose");
+const { mongoose } = require("./db/mongoose");
 // const routes = require("./routes/routes");
 
 const PORT = process.env.PORT || 4000;
