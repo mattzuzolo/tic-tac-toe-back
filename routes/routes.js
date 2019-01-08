@@ -7,6 +7,7 @@ module.exports = (app) => {
   app.get("/api/v1/users", UserController.index);
   app.get("/api/v1/users/:id", UserController.findIndividualById);
   app.post("/api/v1/users", UserController.create);
+  app.post("/api/v1/users/login", UserController.login);
 
   //Game endpoints
 }

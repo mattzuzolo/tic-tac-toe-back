@@ -25,4 +25,15 @@ module.exports = {
       .then(user => response.send(user))
       .catch(event => response.status(400).send(event));
   },
+  login(request, response, next){
+    let body = { username } = request.body;
+    User.findByCredentials(body)
+      .then(user => {
+        if(!user){
+          return response.status(404).send();
+        }
+        response.send({user});
+      })
+      .catch(next);
+  }
 }

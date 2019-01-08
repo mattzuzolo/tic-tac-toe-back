@@ -11,6 +11,17 @@ const UserSchema = new Schema({
   },
 });
 
+UserSchema.statics.findByCredentials = function({username}){
+  return this.findOne({username})
+    .then(user => {
+      if (!user){
+        return Promise.reject();
+      }
+      console.log("FOUND USER:", user);
+      return user;
+    })
+}
+
 const User = mongoose.model("user", UserSchema);
 
 module.exports = { User };
