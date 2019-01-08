@@ -8,7 +8,10 @@ module.exports = {
       .catch(next);
   },
   create(request, response, next){
-    console.log("CREATE REQUEST:", request);
-    console.log("CREATE REQUEST BODY: ", request.body);
+    let body = { username } = request.body;
+    let user = new User(body);
+    user.save()
+      .then(user => response.send(user))
+      .catch(event => response.status(400).send(event));
   },
 }

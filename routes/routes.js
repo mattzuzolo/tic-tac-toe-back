@@ -4,8 +4,8 @@ const GameController = require("../controllers/game_controller");
 
 module.exports = (app) => {
   //User endpoints
-  app.get("/users", UserController.index);
-  app.post("/users", UserController.create);
+  app.get("/api/v1/users", UserController.index);
+  app.post("/api/v1/users", UserController.create);
 
   //Game endpoints
 }
