@@ -7,6 +7,17 @@ module.exports = {
       .then(users => response.send({ users }))
       .catch(next);
   },
+  findIndividualById(request, response, next){
+    let id = request.params.id;
+    User.findById(id)
+      .then(user => {
+        if(!user){
+          return response.status(404).send();
+        }
+        response.send({user});
+      })
+      .catch(next);
+  },
   create(request, response, next){
     let body = { username } = request.body;
     let user = new User(body);
