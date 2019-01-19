@@ -5,19 +5,21 @@ const request = require("supertest");
 
 const User = mongoose.model("user");
 
-const users = [{
+const users = [
+  {
   username: "matt_test"
-},{
+  },
+  {
   username: "marc_test"
-},];
+  }
+];
 
 beforeEach((done) => {
   User.remove({}).then(() => {
     return User.insertMany(users);
-  }).then(() => done());
+  })
+  .then(() => done());
 })
-
-
 
 describe("POST /users", () => {
   
@@ -73,4 +75,5 @@ describe("GET /users", () => {
       })
       .end(done);
     });
+    
 });
