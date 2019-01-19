@@ -1,5 +1,6 @@
 const { app } = require("../../server");
 const mongoose = require("mongoose");
+const { ObjectID } = require("mongodb");
 const expect = require("expect");
 const request = require("supertest");
 
@@ -7,10 +8,12 @@ const User = mongoose.model("user");
 
 const users = [
   {
-  username: "matt_test"
+    _id: new ObjectID(),
+    username: "matt_test"
   },
   {
-  username: "marc_test"
+    _id: new ObjectID(),
+    username: "marc_test"
   }
 ];
 
@@ -75,5 +78,15 @@ describe("GET /users", () => {
       })
       .end(done);
     });
-    
+
+  it("GET to /users/:id returns the specified user", (done) => {
+    request(app)
+      .get("/api/v1/users/:id")
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.users.length).toBe(2);
+      })
+      .end(done);
+    });
+
 });
