@@ -10,10 +10,9 @@ beforeEach((done) => {
 })
 
 describe("POST /users", () => {
-  let username = "test_username";
-
+  
   it("POST to /users creates a new user", (done) => {
-    
+    let username = "test_username";
     request(app)
       .post("/api/v1/users")
       .send({username})
@@ -30,7 +29,24 @@ describe("POST /users", () => {
           expect(users[0].username).toBe(username);
           done();
         })
-        .catch(err => done(e));
+        .catch(err => done(err));
+      })
+  });
+
+  it("POST to /users should not create a user with invalid body data", (done) => {
+    request(app)
+      .post("/api/v1/users")
+      .send({})
+      .expect(400)
+      .end((err, res) => {
+        if(err){
+          return done(err);
+        }
+        User.find().then((users) => {
+          expect(users.length).toBe(0);
+          done();
+        })
+        .catch(err => done(err));
       })
   });
 
