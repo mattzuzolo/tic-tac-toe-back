@@ -1,34 +1,37 @@
-// const { app } = require("../../server");
-// const mongoose = require("mongoose");
-// const expect = require("expect");
-// const request = require("supertest");
+const { app } = require("../../server");
+const mongoose = require("mongoose");
+const expect = require("expect");
+const request = require("supertest");
 
-// const User = mongoose.model("user");
+const User = mongoose.model("user");
 
-// describe("User controller", () => {
-//   let username = "test_username";
+beforeEach((done) => {
+  User.remove({}).then(() => done());
+})
 
-//   it("POST to /users creates a new user", (done) => {
-//     User.count().then(count => {
-//       request(app)
-//         .post("/users")
-//         .send({ username })
-//         .expect(200)
-//         .expect((response => {
-//           expect(response.body.email).toBe(email);
-//         }))
-//         .end((error, response) => {
-//           if(error){
-//             return done(error);
-//           }
-//           User.find().then(users => {
-//             expect(users.length).toBe(2),
-//             expect(users[1].email).toBe(email)
-//             done();
-//           })
-//           .catch(error => done(error));
-//         });
-//     });
-//   });
+describe("POST /users", () => {
+  let username = "test_username";
 
-// });
+  it("POST to /users creates a new user", (done) => {
+    
+    request(app)
+      .post("/api/v1/users")
+      .send({username})
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.username).toBe(username);
+      })
+      .end((err, res) => {
+        if(err){
+          return done(err);
+        }
+        User.find().then((users) => {
+          expect(users.length).toBe(1);
+          expect(users[0].username).toBe(username);
+          done();
+        })
+        .catch(err => done(e));
+      })
+  });
+
+});
