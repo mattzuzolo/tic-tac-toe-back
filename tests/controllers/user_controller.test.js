@@ -79,14 +79,15 @@ describe("GET /users", () => {
       .end(done);
     });
 
-  it("GET to /users/:id returns the specified user", (done) => {
+  it("GET to /users/:id returns the specific user", (done) => {
+
+ 
     request(app)
-      .get("/api/v1/users/:id")
+      .get(`/api/v1/users/${users[0]._id.toHexString()}`)
       .expect(200)
       .expect((res) => {
-        expect(res.body.users.length).toBe(2);
+        expect(res.body.user.username).toBe(users[0].username);
       })
       .end(done);
     });
-
 });
