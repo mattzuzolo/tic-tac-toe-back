@@ -132,7 +132,7 @@ describe("POST /games", () => {
       .get("/api/v1/games")
       .expect(200)
       .expect((res) => {
-        console.log("RESPONSE", res.body);
+        expect(res.body.games.length).toBe(2);
       })
       .end(done);
   })
