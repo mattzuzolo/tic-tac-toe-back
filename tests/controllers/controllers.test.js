@@ -5,6 +5,7 @@ const expect = require("expect");
 const request = require("supertest");
 
 const User = mongoose.model("user");
+const Game = mongoose.model("game");
 
 const users = [
   {
@@ -20,6 +21,9 @@ const users = [
 beforeEach((done) => {
   User.remove({}).then(() => {
     return User.insertMany(users);
+  })
+  .then(() => {
+    Game.remove({});
   })
   .then(() => done());
 })
@@ -80,8 +84,6 @@ describe("GET /users", () => {
     });
 
   it("GET to /users/:id returns the specific user", (done) => {
-
- 
     request(app)
       .get(`/api/v1/users/${users[0]._id.toHexString()}`)
       .expect(200)
@@ -91,3 +93,25 @@ describe("GET /users", () => {
       .end(done);
     });
 });
+
+describe("POST /games", () => {
+
+  it("POST to /game creates a new instance of game", (done) => {
+    let game = {
+      turnsPlayed: 1,
+      userWon: false,
+      user: users[0],
+    }
+    request(app)
+      .post("/api/v1/games")
+      .send(game)
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.turnsPlayed).toBe(1);
+        expect(res.body.user[0]).toBe(users[0]._id.toHexString());
+        expect(res.body.userWon).toBe(false);
+      })
+      .end(done);
+  });
+   
+})
