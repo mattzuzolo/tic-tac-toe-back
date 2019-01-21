@@ -11,5 +11,5 @@ module.exports = (app) => {
 
   //Game endpoints
   app.get("/api/v1/games", GameController.index);
-  app.post("/api/v1/games", GameContoller.create);
+  // app.post("/api/v1/games", GameContoller.create);
 }
