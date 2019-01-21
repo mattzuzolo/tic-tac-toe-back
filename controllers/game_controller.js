@@ -14,12 +14,3 @@ module.exports = {
       .catch(event => response.status(400).send(event));
   }
 }
-
-
-// turnsPlayed: Number,
-//   userWon: Boolean,
-//   user: [{
-//     type: Schema.Types.ObjectId,
-//     ref: "user",
-//     required: true
-//   }],
