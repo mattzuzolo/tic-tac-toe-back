@@ -18,14 +18,27 @@ const users = [
   }
 ];
 
+const games = [
+  {
+    turnsPlayed: 1,
+    userWon: false,
+    user: users[0],
+  },
+  {
+    turnsPlayed: 2,
+    userWon: true,
+    user: users[1],
+  }
+]
+
 beforeEach((done) => {
-  User.remove({}).then(() => {
-    return User.insertMany(users);
-  })
-  .then(() => {
-    Game.remove({});
-  })
-  .then(() => done());
+  Promise.all([
+    User.remove({})
+      .then(() => User.insertMany(users)),
+    Game.remove({})
+      .then(() => Game.insertMany(games))
+  ])
+  .then(() => done())
 })
 
 describe("POST /users", () => {
@@ -113,5 +126,15 @@ describe("POST /games", () => {
       })
       .end(done);
   });
+
+  it("GET /games returns all instances of games", (done) => {
+    request(app)
+      .get("/api/v1/games")
+      .expect(200)
+      .expect((res) => {
+        console.log("RESPONSE", res.body);
+      })
+      .end(done);
+  })
    
 })
