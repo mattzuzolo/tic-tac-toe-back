@@ -10,4 +10,6 @@ module.exports = (app) => {
   app.post("/api/v1/users/login", UserController.login);
 
   //Game endpoints
+  app.get("/api/v1/games", GameController.index);
+  app.post("/api/v1/games", GameContoller.create);
 }
